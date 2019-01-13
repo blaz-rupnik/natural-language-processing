@@ -12,7 +12,6 @@ for (filename in files){
   full_string = paste(full_string,text," ")
   close(f)
 } 
-
 docs <- Corpus(VectorSource(full_string))
 #to lower case
 docs <- tm_map(docs, content_transformer(tolower))
@@ -53,14 +52,8 @@ set.seed(1234)
 #docs2 <- tm_map(docs2, removePunctuation)
 #eliminate whitespace
 #docs2 <- tm_map(docs2, stripWhitespace)
+docs3 <-Corpus(VectorSource(full_string_2))
 library("stringr")
 avg_num_of_sentences = 0
-files2 <- list.files(path="./essay/", full.names=TRUE, recursive=FALSE)
-for (filename in files2){
-  f <- file(filename,'r')
-  text <- readLines(f)
-  print(text)
-  avg_num_of_sentences <- avg_num_of_sentences + str_count(text,pattern = '.')
-  close(f)
-} 
+sapply(strsplit(docs2[[1]]$content, " "), length)
 cat("Average number of sentences: ", avg_num_of_sentences/723)
