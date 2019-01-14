@@ -107,16 +107,21 @@ predictMissingWord <- function(sentence){
     splittedAfter <- strsplit(textAfter, split = ' ')[[1]]
     wordAfter <- splittedAfter[1]
   }
-  missing_word <- ""
+  missing_word <- "_"
   if(hasWordAfter && hasWordBefore){
     sorted_table_after <- sort(table(occurences[[wordAfter]]), decreasing = T)
     #print(names(sorted_table_after))
     sorted_table_before <- sort(table(occurences_after[[wordBefore]]), decreasing = T)
     common <- intersect(names(sorted_table_after),names(sorted_table_before))
-    missing_word <- common[1] 
+    missing_word <- paste("",common[1],"",sep = " ") 
+  }else if(hasWordAfter){
+    sorted_table_after <- sort(table(occurences[[wordAfter]]), decreasing = T)
+    missing_word <- paste(names(sorted_table_after[1]),"",sep = " ")
+  }else{
+    sorted_table_before <- sort(table(occurences_after[[wordBefore]]), decreasing = T)
+    missing_word <- paste("",names(sorted_table_before[1]),sep = " ")
   }
-  #TODO check if start or end of sentence
-  sentence <- gsub("_",paste("",missing_word,"",sep = " "),sentence)
+  sentence <- gsub("_",missing_word,sentence)
   return(sentence)
 }
 
