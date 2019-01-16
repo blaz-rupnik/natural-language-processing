@@ -64,7 +64,7 @@ for (i in 1:num_of_iterations){
   set.seed(sample(1:1000, 1))
   split_structure_processed <- sample.split(dataset_structure_processed$grade, SplitRatio = 0.8)
   training_set_processed = dataset_structure_processed[split_structure_processed,]
-  test_set_processed = dataset_structure_processed[split_structure_processed,]
+  test_set_processed = dataset_structure_processed[-split_structure_processed,]
   classifier_processed = randomForest(x = training_set_processed[-8], y = training_set_processed$grade, ntree = 10)
   y_pred_processed = predict(classifier_processed, newdata = test_set_processed[-8])
   cm_processed = table(test_set_processed[,8],y_pred_processed)
